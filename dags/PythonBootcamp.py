@@ -84,7 +84,6 @@ def müsteri_kayit(ad, ücret, aciklama, kart_no, tc_no,kart_sifre, date = datet
 
 def siparis_func(pizza,sos):
     pizza_tabani_dict = {1 : ClassicPizza(), 2 : MargaritaPizza(), 3 : TurkPizza(), 4 : SadePizza()}
-    pizza_sosu_dict = {11 : ZeytinSos(), 12 : MantarSos(), 13 : KeciPeyniriSos() , 14 : EtSos(), 15 : SoganSos(), 16 : MisirSos()}
     for key in pizza_tabani_dict.keys():
         if key == pizza:
             pizza_tabani = pizza_tabani_dict[key]
