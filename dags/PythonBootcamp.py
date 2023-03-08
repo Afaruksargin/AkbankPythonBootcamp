@@ -1,3 +1,6 @@
+from datetime import datetime
+import csv
+
 class Pizza(object):
 
     def __init__(self,name,cost,explain) :
@@ -67,11 +70,43 @@ def main_func():
         if kontrol == "e":
             pizza_tabani = int(input("Pizza tabanı numaranızı seçiniz"))
             pizza_sosu = int(input("Pizza sosu numaranızı seçiniz"))
+            siparis_detay =  siparis(pizza_sosu,pizza_tabani)
+            ücret = siparis_detay[0]
+            aciklama = siparis_detay[1]
+            print(f" {aciklama} pizza siparişinizin fiyatı {ücret} tldir \n")
+            ödeme_kontrol = input("Siparişinizi onaylıyor musunuz ? e/h \n")
+            if ödeme_kontrol == "e":
+                ad = input("Adınız :   ")
+                kart_no = input("Kart Bilgilerinizi :   ")
+                tc_no = input("TCK No :   ")
+                kart_sifre = input("kart sifre :   ")
+                müsteri_kayit(ad,ücret,aciklama,kart_no,tc_no,kart_sifre)
+                break
         elif kontrol == "h":
             print("Güle Güle")
             break
         else:
             print("Hatalı Tuşlama")
+def müsteri_kayit(ad, ücret, aciklama, kart_no, tc_no,kart_sifre, date = datetime.now()):
+    f = open("/home/user/deneme/AkbankPythonBootcamp/dags/Orders_Database.csv","a")
+    writer = csv.writer(f)
+    row = [ad, ücret, aciklama, kart_no, tc_no,kart_sifre, date]
+    writer.writerow(row)
+    f.close()
 
+
+
+def siparis(pizza_sosu,pizza_tabani):
+    pizza_tabani_dict = {1 : ClassicPizza(), 2 : MargaritaPizza(), 3 : TurkPizza(), 4 : SadePizza()}
+    pizza_sosu_dict = {11 : ZeytinSos(), 12 : MantarSos(), 13 : KeciPeyniriSos() , 14 : EtSos(), 15 : SoganSos(), 16 : MisirSos()}
+    for key in pizza_tabani_dict.keys():
+        if key == pizza_tabani:
+            pizza_tabani = pizza_tabani_dict[key]
+    for key in pizza_sosu_dict.keys():
+        if key == pizza_sosu:
+            pizza_sosu = pizza_sosu_dict[key]
+    return Decarator.get_cost(pizza_sosu,pizza_tabani), Decarator.get_explain(pizza_sosu,pizza_tabani)
+    
+        
 if __name__ == "__main__":
     main_func()
